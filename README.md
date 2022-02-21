@@ -5,4 +5,4 @@ This plugin will purge the entire cache at GraphCDN and/or Cloudflare on create/
 ## Install
 
 1.  Upload the files to `/wp-content/plugins/`
-2.      Enter any settings on the plugins settings page. You don't need to set both Cloudflare and GraphCDN, just the one provider you need or both.
+2.  Enter any settings on the plugins settings page. You don't need to set both Cloudflare and GraphCDN, just the one provider you need or both.
