@@ -64,6 +64,21 @@ add_action("nestedpages_post_order_updated", "cp_purge_cache", 20, 1);
 add_action("delete_post", "cp_purge_cache", 20, 1);
 
 /*
+ * Purge everything on ACF site options save
+ */
+function cp_acf_saved() {
+	$screen = get_current_screen();
+	if (strpos($screen->id, "site-options") == true) {
+	    // Try a GrpahCDN cache purge
+	    $graphcdn_response = cp_do_graphcdn_purge(false);
+
+	    // Try a Cloudflare cache purge
+	    $cloudflare_response = cp_do_cloudflare_purge(false);
+	}
+}
+add_action('acf/save_post', 'cp_acf_saved', 20);
+
+/*
  * This function hits the GraphCDN API and attempts to purge the cache
  */
 function cp_do_graphcdn_purge($blocking = true)
