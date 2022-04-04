@@ -1,0 +1,37 @@
+/* Admin bar purge button */
+#wpadminbar .cp-purge-button .dashicons {
+  font-family: "dashicons";
+  font-size: 20px;
+  line-height: 32px;
+}
+
+@keyframes fade-in-out {
+  from {
+    opacity: 0.5;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.cp-purge-button .msg {
+  color: inherit;
+  transition: color 200ms;
+}
+
+.cp-purge-button.cp-status-loading .msg {
+  animation-name: fade-in-out;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.cp-purge-button.cp-status-success .msg {
+  color: green;
+}
+
+.cp-purge-button.cp-status-error .msg {
+  color: red;
+}
