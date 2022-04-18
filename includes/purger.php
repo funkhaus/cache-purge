@@ -109,8 +109,6 @@ function cp_do_graphcdn_purge($blocking = true)
         "body" => $gql,
     ];
     return wp_remote_post($url, $args);
-
-    return $response;
 }
 
 /*

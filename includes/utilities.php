@@ -42,3 +42,21 @@ function cp_set_notice($type, $message)
 
     set_transient("cp_admin_notices", $notices, 30);
 }
+
+function cp_has_configured_plugin() {
+    $options = get_option("cp_settings");
+
+    $cf_zone_id = $options["cloudflare_zone_id"] ?? "";
+    $cf_token = $options["cloudflare_token"] ?? "";
+
+    $graph_cdn_url = $options["graphcdn_admin_url"] ?? "";
+    $graph_cdn_token = $options["graphcdn_token"] ?? "";
+
+    $has_configured_cache_provider = false;
+
+    if ( ( $cf_zone_id && $cf_token ) || ( $graph_cdn_url && $graph_cdn_token ) ) {
+        $has_configured_cache_provider = true;
+    }
+
+    return $has_configured_cache_provider;
+}
