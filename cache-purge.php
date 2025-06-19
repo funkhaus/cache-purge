@@ -16,6 +16,7 @@ include_once plugin_dir_path(__FILE__) . "includes/purger.php";
 include_once plugin_dir_path(__FILE__) . "includes/settings.php";
 include_once plugin_dir_path(__FILE__) . "includes/admin-bar.php";
 include_once plugin_dir_path(__FILE__) . "includes/api.php";
+include_once plugin_dir_path(__FILE__) . "includes/nested-page-compatibility.php";
 
 /*
  * Plugin activated, setup default options
@@ -34,6 +35,7 @@ register_activation_hook(__FILE__, "cp_plugin_activated");
 
 function cp_admin_scripts()
 {
+    $plugin_version = '1.0.0';
     wp_enqueue_script("jquery");
     wp_enqueue_script(
         "cp_main",
