@@ -35,6 +35,11 @@ function cp_options_updated($old_value, $new_value, $option_name)
 }
 add_action("update_option_cp_settings", "cp_options_updated", 10, 3);
 
+function cp_run_purge_cache() {
+    cp_do_graphcdn_purge(false);
+    cp_do_cloudflare_purge(false);
+}
+
 /*
  * Run this on edit of a post/page/menuItem/attachment.
  * This is slient, so it displays no errors.
@@ -51,16 +56,17 @@ function cp_purge_cache($object_id)
         return;
     }
 
-    // Try a GrpahCDN cache purge
-    $graphcdn_response = cp_do_graphcdn_purge(false);
+    if ( wp_next_scheduled( 'cp_run_purge_cache' ) ) {
+        error_log( print_r( 'Already scheduled', true ) );
+        return;
+    }
 
-    // Try a Cloudflare cache purge
-    $cloudflare_response = cp_do_cloudflare_purge(false);
+    wp_schedule_single_event(time() + 1, 'cp_run_purge_cache');
 }
+add_action( 'cp_run_purge_cache', 'cp_run_purge_cache' );
 add_action("wp_update_nav_menu", "cp_purge_cache", 20, 1);
 add_action("save_post", "cp_purge_cache", 20, 1);
 add_action("attachment_updated", "cp_purge_cache", 20, 1);
-add_action("nestedpages_post_order_updated", "cp_purge_cache", 20, 1);
 add_action("delete_post", "cp_purge_cache", 20, 1);
 
 /*
